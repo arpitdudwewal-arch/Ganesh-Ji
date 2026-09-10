@@ -2,56 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>For Kashish 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganpati Bappa Morya 🙏</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            background: linear-gradient(135deg, #fbd08a, #e8720e);
             font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
         }
 
         .card {
-            background: white;
+            background: #fffaf0;
             width: 450px;
+            max-width: 90vw;
             padding: 40px;
             border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(120,50,0,0.3);
             text-align: center;
             animation: fadeIn 1.5s ease-in-out;
             position: relative;
+            z-index: 2;
+            border: 2px solid rgba(201,150,47,0.5);
+        }
+
+        .invocation {
+            color: #d4321e;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
         }
 
         h1 {
-            color: #e91e63;
-            margin-bottom: 15px;
+            color: #c9500e;
+            margin: 5px 0 15px;
+            font-size: 30px;
         }
 
         p {
-            color: #444;
+            color: #5a3a1e;
             font-size: 17px;
             line-height: 1.7;
         }
 
+        h2 {
+            color: #d4321e;
+            margin-top: 20px;
+        }
+
         button {
             margin-top: 25px;
-            padding: 14px 30px;
+            padding: 14px 34px;
             border: none;
             border-radius: 30px;
-            background: #e91e63;
+            background: linear-gradient(135deg, #d4321e, #f5901f);
             color: white;
             font-size: 17px;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s ease;
+            box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6);
         }
 
         button:hover {
-            background: #d81b60;
             transform: scale(1.07);
         }
 
@@ -61,79 +79,153 @@
             animation: fadeIn 1s ease-in-out;
         }
 
+        /* Put your own photo or GIF here if you like */
         #celebration img {
             width: 220px;
             margin-top: 15px;
             border-radius: 15px;
         }
 
-        .hearts {
-            position: absolute;
-            font-size: 20px;
-            animation: float 6s linear infinite;
-            color: #ff4d6d;
+        .calendar-btn {
+            display: inline-block;
+            margin-top: 18px;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            background: #c9962f;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .calendar-btn:hover { transform: scale(1.05); }
+
+        /* floating decorations rising up the screen */
+        .floaty {
+            position: fixed;
+            bottom: -40px;
+            font-size: 24px;
+            animation: float 7s linear infinite;
+            z-index: 1;
+            pointer-events: none;
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-10vh); opacity: 0; }
+            0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+            15%  { opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(40deg); opacity: 0; }
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .floaty { display: none; }
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Kashish 💖</h1>
+        <p class="invocation">॥ श्री गणेशाय नमः ॥</p>
+
+        <h1>Ganesh Chaturthi 🪔</h1>
 
         <p>
-            Some connections feel special… rare… divine.
+            Bappa is coming home, and every celebration feels brighter
+            with the people we love around us.
         </p>
 
         <p>
-            If love had a pure form,  
-            I would wish for a bond like Parvati and Shiv —  
-            strong, loyal, eternal.
+            The diyas are lit, the modaks are ready,
+            and there's one thing missing… you. 🌸
         </p>
 
-        <p>
-            So today, with all sincerity and respect…  
-            I want to ask you something.
-        </p>
+        <h2>Will you celebrate Ganesh Chaturthi with us? 🐘</h2>
 
-        <h2>Will you be my forever Valentine? 🌹</h2>
-
-        <button onclick="celebrate()">Yes 💞</button>
+        <button onclick="celebrate()">Yes 🙏</button>
 
         <div id="celebration">
-            <h2>Yaaayyyy!!! 💃❤️</h2>
-            <p>You just made my heart do tandav in happiness 😄💖</p>
-            <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebration GIF">
+            <h2>Ganpati Bappa Morya! 💃🎉</h2>
+            <p>Yaaay! Bappa's blessings and our celebration are complete now 🌺✨</p>
+
+            <!-- Optional: replace this with your own image/GIF, or delete it -->
+            <!-- <img src="your-image.jpg" alt="Celebration"> -->
+
+            <a class="calendar-btn" id="calendarLink" href="#" target="_blank" rel="noopener">
+                📅 Add to my calendar — 14 Sep 2026
+            </a>
         </div>
     </div>
 
     <script>
+        // ---- EDIT YOUR EVENT DETAILS HERE ----
+        const EVENT = {
+            title:    "Ganesh Chaturthi Celebration",
+            startYMD: "20260914",   // 14 Sep 2026 (all-day)
+            endYMD:   "20260915",   // next day = end of a single all-day event
+            details:  "Come welcome Bappa home and celebrate Ganesh Chaturthi with us!",
+            location: ""            // e.g. "Sunshine Apartments, Mumbai"
+        };
+        // --------------------------------------
+
         function celebrate() {
             document.getElementById("celebration").style.display = "block";
+            burst();  // extra flower shower when they say yes
         }
 
-        // Floating hearts effect
-        setInterval(function() {
-            const heart = document.createElement("div");
-            heart.className = "hearts";
-            heart.innerHTML = "❤";
-            heart.style.left = Math.random() * 100 + "vw";
-            document.body.appendChild(heart);
+        // Build the Google Calendar link
+        (function setCalendar() {
+            const p = new URLSearchParams({
+                action: "TEMPLATE",
+                text: EVENT.title,
+                dates: EVENT.startYMD + "/" + EVENT.endYMD,
+                details: EVENT.details,
+                location: EVENT.location
+            });
+            document.getElementById("calendarLink").href =
+                "https://calendar.google.com/calendar/render?" + p.toString();
+        })();
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }, 500);
+        // Personalise: add ?name=Ravi to the link to greet by name
+        (function personalise() {
+            const name = new URLSearchParams(location.search).get("name");
+            if (name) {
+                const clean = name.replace(/[<>]/g, "").trim().slice(0, 40);
+                if (clean) {
+                    const h2 = document.querySelector(".card h2");
+                    h2.textContent = clean + ", will you celebrate Ganesh Chaturthi with us? 🐘";
+                }
+            }
+        })();
+
+        // floating decorations
+        const symbols = ["🌼", "🪔", "🌺", "🧡", "🌸", "🙏"];
+        setInterval(function () {
+            const f = document.createElement("div");
+            f.className = "floaty";
+            f.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            f.style.left = Math.random() * 100 + "vw";
+            f.style.fontSize = (18 + Math.random() * 18) + "px";
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), 7000);
+        }, 450);
+
+        // a quick shower of flowers on "Yes"
+        function burst() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const f = document.createElement("div");
+                    f.className = "floaty";
+                    f.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    f.style.left = Math.random() * 100 + "vw";
+                    f.style.animationDuration = "3.5s";
+                    document.body.appendChild(f);
+                    setTimeout(() => f.remove(), 3500);
+                }, i * 80);
+            }
+        }
     </script>
 
 </body>
