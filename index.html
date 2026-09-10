@@ -7,14 +7,15 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 24px 12px;
             background: linear-gradient(135deg, #fbd08a, #e8720e);
             font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;      /* only hide sideways scroll, allow vertical */
+            box-sizing: border-box;
         }
 
         .card {
@@ -53,6 +54,18 @@
         h2 {
             color: #d4321e;
             margin-top: 20px;
+        }
+
+        .when {
+            margin-top: 18px;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid rgba(201,150,47,0.6);
+            border-radius: 12px;
+            background: #fff6e6;
+            font-size: 15px;
+            color: #c9500e;
+            font-weight: 600;
         }
 
         .invited-by {
@@ -132,12 +145,12 @@
             display: inline-block;
             margin-top: 18px;
             text-decoration: none;
-            padding: 12px 28px;
+            padding: 14px 28px;
             border-radius: 30px;
             background: #c9962f;
             color: white;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 16px;
         }
         .calendar-btn:hover { transform: scale(1.05); }
 
@@ -183,6 +196,8 @@
             and there's one thing missing… you. 🌸
         </p>
 
+        <div class="when">🕑 Monday, 14 Sep 2026 · 2:00 PM onwards</div>
+
         <h2 id="question">Will you celebrate Ganesh Chaturthi with us? 🐘</h2>
 
         <div class="buttons">
@@ -202,7 +217,7 @@
             <!-- <img src="your-image.jpg" alt="Celebration"> -->
 
             <a class="calendar-btn" id="calendarLink" href="#" target="_blank" rel="noopener">
-                📅 Add to my calendar — 14 Sep 2026
+                📅 Add to my calendar — 14 Sep 2026, 2 PM
             </a>
         </div>
 
@@ -213,26 +228,33 @@
     <script>
         // ---- EDIT YOUR EVENT DETAILS HERE ----
         const EVENT = {
-            title:    "Ganesh Chaturthi Celebration",
-            startYMD: "20260914",
-            endYMD:   "20260915",
-            details:  "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
-            location: "Joyville Palm Grove, Virar West"
+            title:   "Ganesh Chaturthi Celebration",
+            start:   "20260914T140000",   // 14 Sep 2026, 2:00 PM
+            end:     "20260914T170000",   // ends 5:00 PM (change if you like)
+            tz:      "Asia/Kolkata",       // India time
+            details: "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
+            location:"Joyville Palm Grove, Virar West"
         };
         // --------------------------------------
 
         function celebrate() {
-            document.getElementById("celebration").style.display = "block";
+            const cel = document.getElementById("celebration");
+            cel.style.display = "block";
             document.getElementById("teaser").textContent = "";
             burst();
+            // make sure the calendar button scrolls into view on mobile
+            setTimeout(function () {
+                cel.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 150);
         }
 
-        // Build the Google Calendar link
+        // Build the Google Calendar link (timed event in India time)
         (function setCalendar() {
             const p = new URLSearchParams({
                 action: "TEMPLATE",
                 text: EVENT.title,
-                dates: EVENT.startYMD + "/" + EVENT.endYMD,
+                dates: EVENT.start + "/" + EVENT.end,
+                ctz: EVENT.tz,
                 details: EVENT.details,
                 location: EVENT.location
             });
@@ -271,7 +293,6 @@
             if (e) e.preventDefault();
             tries++;
 
-            // jump to a random spot on screen
             const pad = 20;
             const maxX = window.innerWidth  - noBtn.offsetWidth  - pad;
             const maxY = window.innerHeight - noBtn.offsetHeight - pad;
@@ -279,7 +300,6 @@
             noBtn.style.left = Math.max(pad, Math.random() * maxX) + "px";
             noBtn.style.top  = Math.max(pad, Math.random() * maxY) + "px";
 
-            // grow the Yes button (capped) and shrink No a little
             const scale = Math.min(1 + tries * 0.08, 1.8);
             yesBtn.style.fontSize = (17 * scale) + "px";
             noBtn.style.opacity = Math.max(0.4, 1 - tries * 0.08);
