@@ -126,16 +126,19 @@
         // ---- 2. FORMSPREE ENDPOINT ----
         const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
 
-        // ---- MUSIC (starts on first tap; no visible control) ----
+        // ---- MUSIC (tries to start immediately; browsers may require one tap first) ----
         const bgm = document.getElementById("bgm");
         bgm.volume = 0.5;
 
         function playMusic() {
-            bgm.play().catch(() => {
-                // browser blocked it — will try again on next tap
-            });
+            bgm.play().catch(() => { /* blocked until a tap — handled below */ });
         }
-        // phones only allow audio after a tap — start on the first interaction
+
+        // 1) try the instant the page loads (works where the browser allows it)
+        window.addEventListener("load", playMusic);
+        document.addEventListener("DOMContentLoaded", playMusic);
+
+        // 2) fallback: start on the first tap/scroll if autoplay was blocked
         function firstTouchStart() {
             playMusic();
             document.removeEventListener("click", firstTouchStart);
