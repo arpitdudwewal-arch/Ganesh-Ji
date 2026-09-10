@@ -50,14 +50,6 @@
             color: white; font-weight: 600; font-size: 16px;
         }
         .calendar-btn:hover { transform: scale(1.05); }
-        /* music toggle button */
-        .music-btn {
-            position: fixed; top: 16px; right: 16px; z-index: 5;
-            width: 48px; height: 48px; padding: 0; border-radius: 50%;
-            background: rgba(255,250,240,0.9); color: #c9500e; font-size: 22px;
-            box-shadow: 0 6px 16px rgba(120,50,0,0.25); border: 1px solid rgba(201,150,47,0.5);
-            display: flex; align-items: center; justify-content: center; line-height: 1;
-        }
         .floaty { position: fixed; bottom: -40px; font-size: 24px; animation: float 7s linear infinite; z-index: 1; pointer-events: none; }
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
@@ -72,7 +64,6 @@
 
     <!-- Background music. Upload your file to the repo and name it music.mp3 -->
     <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
-    <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">🔇</button>
 
     <div class="card">
         <p class="invocation">॥ श्री गणेशाय नमः ॥</p>
@@ -135,28 +126,14 @@
         // ---- 2. FORMSPREE ENDPOINT ----
         const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
 
-        // ---- MUSIC ----
+        // ---- MUSIC (starts on first tap; no visible control) ----
         const bgm = document.getElementById("bgm");
-        const musicBtn = document.getElementById("musicBtn");
         bgm.volume = 0.5;
-        let musicOn = false;
 
         function playMusic() {
-            bgm.play().then(() => {
-                musicOn = true;
-                musicBtn.textContent = "🔊";
-            }).catch(() => {
+            bgm.play().catch(() => {
                 // browser blocked it — will try again on next tap
             });
-        }
-        function toggleMusic() {
-            if (musicOn && !bgm.paused) {
-                bgm.pause();
-                musicOn = false;
-                musicBtn.textContent = "🔇";
-            } else {
-                playMusic();
-            }
         }
         // phones only allow audio after a tap — start on the first interaction
         function firstTouchStart() {
