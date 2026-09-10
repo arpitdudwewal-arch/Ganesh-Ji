@@ -91,6 +91,24 @@
   .invited-by b{color:var(--gold-deep);}
   .location{margin-top:6px; font-size:15px; color:var(--ink-soft);}
 
+  /* festive tap-to-open cover (its tap unlocks audio on phones) */
+  #intro{position:fixed; inset:0; z-index:60; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; cursor:pointer; padding:28px;
+    background:
+      radial-gradient(760px 420px at 50% 30%, rgba(232,190,90,.32), transparent 62%),
+      linear-gradient(160deg,var(--plum-900),var(--plum-700));
+    transition:opacity .7s ease;}
+  #intro.hide{opacity:0; pointer-events:none;}
+  #intro .om{font-family:"Yatra One",serif; color:var(--gold); font-size:1rem; letter-spacing:1px; margin-bottom:6px; opacity:.9;}
+  #intro .idiya{width:96px; height:auto; margin:4px 0 14px; filter:drop-shadow(0 0 26px rgba(255,168,45,.6));}
+  #intro h2.title{font-family:"Yatra One",serif; font-weight:400; color:var(--ivory);
+    font-size:clamp(1.8rem,8vw,2.4rem); line-height:1.15; margin:0;}
+  #intro .glow{color:var(--saffron);}
+  #intro .isub{color:var(--ivory); opacity:.85; margin-top:10px; font-size:1rem;}
+  #intro .tap{margin-top:30px; display:inline-block; font-weight:700; font-size:1rem; color:var(--plum-900);
+    background:linear-gradient(135deg,var(--saffron),var(--gold)); padding:14px 34px; border-radius:40px;
+    box-shadow:0 14px 30px -10px rgba(232,190,90,.7); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
   .floaty{position:fixed; bottom:-40px; font-size:24px; animation:float 7s linear infinite; z-index:1; pointer-events:none;}
   @keyframes float{0%{transform:translateY(0) rotate(0);opacity:0;}15%{opacity:1;}100%{transform:translateY(-118vh) rotate(40deg);opacity:0;}}
   @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
@@ -98,6 +116,23 @@
 </style>
 </head>
 <body>
+
+  <!-- Festive cover: the tap here unlocks audio + reveals the invitation -->
+  <div id="intro" onclick="openInvite()">
+    <div class="om">॥ श्री गणेशाय नमः ॥</div>
+    <svg class="idiya" viewBox="0 0 100 88" aria-hidden="true">
+      <g class="flame">
+        <path d="M50 6 C42 20 44 33 50 39 C56 33 58 20 50 6 Z" fill="#ffbb45"/>
+        <path d="M50 16 C46 25 47 33 50 37 C53 33 54 25 50 16 Z" fill="#e5391d"/>
+      </g>
+      <path d="M14 56 Q50 48 86 56 L78 72 Q50 82 22 72 Z" fill="#c9962f"/>
+      <path d="M14 56 Q50 48 86 56 L84 60 Q50 53 16 60 Z" fill="#e8be5a"/>
+      <ellipse cx="50" cy="56" rx="36" ry="6.5" fill="#7a4a10" opacity=".35"/>
+    </svg>
+    <h2 class="title">Ganpati Bappa <span class="glow">Morya</span> 🙏</h2>
+    <p class="isub">You have an invitation waiting…</p>
+    <span class="tap">Tap to open 🌸</span>
+  </div>
 
   <!-- rangoli mandala watermark -->
   <div class="mandala" aria-hidden="true">
@@ -193,16 +228,18 @@
     // ---- 2. FORMSPREE ENDPOINT ----
     const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
 
-    // ---- MUSIC (starts on first tap anywhere) ----
+    // ---- MUSIC + tap-to-open cover ----
     const bgm = document.getElementById("bgm");
     bgm.volume = 0.5;
     function playMusic(){ bgm.play().catch(()=>{}); }
-    window.addEventListener("load", playMusic);
-    function firstTouchStart(){ playMusic();
-        document.removeEventListener("click", firstTouchStart);
-        document.removeEventListener("touchstart", firstTouchStart); }
-    document.addEventListener("click", firstTouchStart);
-    document.addEventListener("touchstart", firstTouchStart);
+    // the tap on the cover is the interaction phones require, so music is guaranteed
+    function openInvite(){
+        playMusic();
+        const intro = document.getElementById("intro");
+        intro.classList.add("hide");
+        setTimeout(()=>{ intro.style.display="none"; }, 700);
+    }
+    window.addEventListener("load", playMusic); // desktop may allow it right away
 
     function celebrate(){
         const cel = document.getElementById("celebration");
