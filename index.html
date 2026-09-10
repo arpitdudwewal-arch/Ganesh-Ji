@@ -1,279 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ganpati Bappa Morya 🙏</title>
-    <style>
-        body {
-            margin: 0; padding: 24px 12px;
-            background: linear-gradient(135deg, #fbd08a, #e8720e);
-            font-family: 'Segoe UI', sans-serif;
-            display: flex; min-height: 100vh; overflow-x: hidden; box-sizing: border-box;
-        }
-        .card {
-            margin: auto; background: #fffaf0; width: 450px; max-width: 90vw; padding: 40px;
-            border-radius: 25px; box-shadow: 0 20px 40px rgba(120,50,0,0.3); text-align: center;
-            animation: fadeIn 1.5s ease-in-out; position: relative; z-index: 2;
-            border: 2px solid rgba(201,150,47,0.5);
-        }
-        .invocation { color: #d4321e; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
-        h1 { color: #c9500e; margin: 5px 0 15px; font-size: 30px; }
-        p { color: #5a3a1e; font-size: 17px; line-height: 1.7; }
-        h2 { color: #d4321e; margin-top: 20px; }
-        .when {
-            margin-top: 18px; display: inline-block; padding: 10px 20px;
-            border: 1px solid rgba(201,150,47,0.6); border-radius: 12px;
-            background: #fff6e6; font-size: 15px; color: #c9500e; font-weight: 600;
-        }
-        .invited-by { margin-top: 22px; font-size: 15px; color: #8a5a2e; }
-        .invited-by strong { color: #c9500e; }
-        .location { margin-top: 6px; font-size: 15px; color: #8a5a2e; }
-        .buttons { margin-top: 25px; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
-        .yes-float { display: inline-block; animation: bob 2.2s ease-in-out infinite; }
-        @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-        button { padding: 14px 34px; border: none; border-radius: 30px; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.25s ease; }
-        .yes-btn { background: linear-gradient(135deg, #d4321e, #f5901f); color: white; box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6); }
-        .yes-btn:hover { transform: scale(1.07); }
-        .no-btn { background: #efe3d0; color: #8a5a2e; }
-        .teaser { margin-top: 14px; min-height: 20px; font-size: 14px; color: #c9500e; font-weight: 600; }
-        #celebration { margin-top: 25px; display: none; animation: fadeIn 1s ease-in-out; }
-        #celebration img { width: 220px; margin-top: 15px; border-radius: 15px; }
-        .name-input {
-            margin-top: 12px; padding: 12px 16px; width: 80%; max-width: 260px;
-            border: 1px solid #d9b877; border-radius: 12px; font-size: 16px; text-align: center; outline: none;
-        }
-        .status { margin-top: 12px; font-size: 14px; min-height: 18px; font-weight: 600; }
-        .calendar-btn {
-            display: inline-block; margin-top: 18px; text-decoration: none;
-            padding: 14px 28px; border-radius: 30px; background: #c9962f;
-            color: white; font-weight: 600; font-size: 16px;
-        }
-        .calendar-btn:hover { transform: scale(1.05); }
-        .floaty { position: fixed; bottom: -40px; font-size: 24px; animation: float 7s linear infinite; z-index: 1; pointer-events: none; }
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            15% { opacity: 1; }
-            100% { transform: translateY(-115vh) rotate(40deg); opacity: 0; }
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (prefers-reduced-motion: reduce) { .floaty, .yes-float { animation: none; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ganpati Bappa Morya 🙏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum-900:#25061f; --plum-700:#45103a; --plum-500:#5c1a4d;
+    --ivory:#fdf3e0; --ivory-2:#f6e6c8;
+    --marigold:#f5a01f; --saffron:#ffbb45; --vermilion:#e5391d;
+    --gold:#e8be5a; --gold-deep:#c9962f; --leaf:#3f8f4f;
+    --ink:#4a1030; --ink-soft:#8a5a6e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{min-height:100%;}
+  body{
+    font-family:"Mukta",system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 500px at 50% -8%, rgba(232,190,90,.30), transparent 60%),
+      radial-gradient(700px 460px at 50% 120%, rgba(229,57,29,.28), transparent 62%),
+      linear-gradient(160deg,var(--plum-900),var(--plum-700));
+    min-height:100vh; display:flex; padding:26px 14px; overflow-x:hidden;
+  }
+  /* faint rangoli mandala behind everything */
+  .mandala{position:fixed; inset:0; z-index:0; display:grid; place-items:center;
+    pointer-events:none; opacity:.12;}
+  .mandala svg{width:min(125vh,150vw); height:auto;}
+
+  .card{
+    position:relative; z-index:2; margin:auto; width:460px; max-width:92vw;
+    background:linear-gradient(180deg,var(--ivory),var(--ivory-2));
+    border-radius:10px; padding:70px 34px 40px;
+    box-shadow:0 30px 70px -18px rgba(0,0,0,.6);
+    text-align:center; outline:2px solid var(--gold-deep); outline-offset:-12px;
+    animation:rise 1s ease-out;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+
+  /* gold torana arch sitting on top of the card */
+  .torana{position:absolute; top:-2px; left:0; width:100%; height:64px; overflow:visible;}
+  /* marigold garland draped just below the arch */
+  .garland{position:absolute; top:40px; left:0; width:100%; height:34px; overflow:visible;}
+
+  .invocation{color:var(--vermilion); font-weight:600; letter-spacing:.5px; font-size:1.05rem; margin-bottom:4px;}
+
+  .diya{width:70px; height:auto; display:block; margin:6px auto 2px;}
+  .flame{transform-origin:50% 100%; animation:flick 2.4s ease-in-out infinite;}
+  @keyframes flick{0%,100%{transform:scale(1) rotate(-1deg);}50%{transform:scale(1.07) rotate(1.5deg);opacity:.92;}}
+
+  h1{font-family:"Yatra One",serif; font-weight:400; color:var(--vermilion);
+    font-size:clamp(2rem,9vw,2.7rem); line-height:1.05; margin:2px 0 4px;}
+  .sub{display:block; font-weight:600; letter-spacing:3px; font-size:.72rem;
+    color:var(--gold-deep); margin-top:8px;}
+
+  p.msg{color:var(--ink-soft); font-size:1.03rem; line-height:1.7; max-width:40ch; margin:14px auto 0;}
+
+  .when{margin-top:20px; display:inline-block; padding:10px 22px;
+    border:1px solid var(--gold-deep); border-radius:14px; background:rgba(255,255,255,.45);
+    color:var(--ink); font-weight:600;}
+  .when b{color:var(--vermilion);}
+
+  h2{font-family:"Yatra One",serif; font-weight:400; color:var(--ink);
+    font-size:clamp(1.25rem,5.5vw,1.55rem); margin-top:22px; line-height:1.25;}
+
+  .buttons{margin-top:24px; display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap;}
+  .yes-float{display:inline-block; animation:bob 2.2s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  button{padding:14px 32px; border:none; border-radius:30px; font-size:17px; font-weight:600; cursor:pointer; transition:.25s; font-family:inherit;}
+  .yes-btn{color:#fff; background:linear-gradient(135deg,var(--vermilion),var(--marigold));
+    box-shadow:0 12px 24px -8px rgba(229,57,29,.6);}
+  .yes-btn:hover{transform:scale(1.07);}
+  .no-btn{background:#efe1cd; color:#9a6a4e;}
+
+  .teaser{margin-top:14px; min-height:20px; font-size:14px; color:var(--vermilion); font-weight:600;}
+
+  #celebration{margin-top:24px; display:none; animation:fadeIn 1s ease;}
+  #celebration img{width:220px; margin-top:14px; border-radius:14px;}
+  .name-input{margin-top:12px; padding:12px 16px; width:80%; max-width:260px;
+    border:1px solid var(--gold-deep); border-radius:12px; font-size:16px; text-align:center; outline:none; background:#fff;}
+  .status{margin-top:12px; font-size:14px; min-height:18px; font-weight:600;}
+  .calendar-btn{display:inline-block; margin-top:18px; text-decoration:none; padding:14px 28px;
+    border-radius:30px; background:var(--gold-deep); color:#fff; font-weight:600; font-size:16px;}
+  .calendar-btn:hover{transform:scale(1.05);}
+
+  .invited-by{margin-top:24px; font-size:15px; color:var(--ink-soft);}
+  .invited-by b{color:var(--gold-deep);}
+  .location{margin-top:6px; font-size:15px; color:var(--ink-soft);}
+
+  .floaty{position:fixed; bottom:-40px; font-size:24px; animation:float 7s linear infinite; z-index:1; pointer-events:none;}
+  @keyframes float{0%{transform:translateY(0) rotate(0);opacity:0;}15%{opacity:1;}100%{transform:translateY(-118vh) rotate(40deg);opacity:0;}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+  @media (prefers-reduced-motion:reduce){.floaty,.yes-float,.flame,.card{animation:none;}}
+</style>
 </head>
 <body>
 
-    <!-- Background music. Upload your file to the repo and name it music.mp3 -->
-    <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+  <!-- rangoli mandala watermark -->
+  <div class="mandala" aria-hidden="true">
+    <svg viewBox="0 0 200 200" fill="none" stroke="#f0d69a" stroke-width=".5">
+      <circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="72"/>
+      <circle cx="100" cy="100" r="50"/><circle cx="100" cy="100" r="28"/>
+      <g id="mandalaPetals"></g>
+    </svg>
+  </div>
 
-    <div class="card">
-        <p class="invocation">॥ श्री गणेशाय नमः ॥</p>
-        <h1>Ganesh Chaturthi 🪔</h1>
+  <!-- Background music. Upload your file to the repo and name it music.mp3 -->
+  <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
 
-        <p>Bappa is coming home, and every celebration feels brighter with the people we love around us.</p>
-        <p>The diyas are lit, the modaks are ready, and there's one thing missing… you. 🌸</p>
+  <div class="card">
 
-        <div class="when">🕑 Monday, 14 Sep 2026 · 2:00 PM onwards</div>
+    <!-- gold torana arch -->
+    <svg class="torana" viewBox="0 0 460 64" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M8 60 Q8 14 60 12 Q120 8 230 22 Q340 8 400 12 Q452 14 452 60"
+            fill="none" stroke="#c9962f" stroke-width="3"/>
+      <path d="M18 60 Q18 24 66 22 Q140 18 230 30 Q320 18 394 22 Q442 24 442 60"
+            fill="none" stroke="#e8be5a" stroke-width="1.6"/>
+      <g id="toranaDrops"></g>
+      <circle cx="230" cy="22" r="7" fill="#e5391d"/>
+      <circle cx="230" cy="22" r="3" fill="#ffbb45"/>
+    </svg>
 
-        <h2 id="question">Will you celebrate Ganesh Chaturthi with us? 🐘</h2>
+    <!-- marigold garland -->
+    <svg class="garland" viewBox="0 0 460 34" preserveAspectRatio="none" aria-hidden="true">
+      <g id="garlandFlowers"></g>
+    </svg>
 
-        <div class="buttons">
-            <span class="yes-float">
-                <button class="yes-btn" id="yesBtn" onclick="celebrate()">Yes 🙏</button>
-            </span>
-            <button class="no-btn" id="noBtn">Can't come 😔</button>
-        </div>
+    <p class="invocation">॥ श्री गणेशाय नमः ॥</p>
 
-        <p class="teaser" id="teaser"></p>
+    <!-- diya -->
+    <svg class="diya" viewBox="0 0 100 88" aria-hidden="true">
+      <g class="flame">
+        <path d="M50 6 C42 20 44 33 50 39 C56 33 58 20 50 6 Z" fill="#ffbb45"/>
+        <path d="M50 16 C46 25 47 33 50 37 C53 33 54 25 50 16 Z" fill="#e5391d"/>
+      </g>
+      <path d="M14 56 Q50 48 86 56 L78 72 Q50 82 22 72 Z" fill="#c9962f"/>
+      <path d="M14 56 Q50 48 86 56 L84 60 Q50 53 16 60 Z" fill="#e8be5a"/>
+      <ellipse cx="50" cy="56" rx="36" ry="6.5" fill="#7a4a10" opacity=".35"/>
+    </svg>
 
-        <div id="celebration">
-            <h2>Ganpati Bappa Morya! 💃🎉</h2>
+    <h1>Ganesh Chaturthi<span class="sub">GANPATI BAPPA MORYA</span></h1>
 
-            <div id="rsvpAsk">
-                <p>Type your name and tap Confirm to RSVP 🌸</p>
-                <input id="guestName" class="name-input" type="text" placeholder="Your name" />
-                <br>
-                <button class="yes-btn" id="confirmBtn" style="margin-top:14px;" onclick="sendRSVP()">Confirm 🙏</button>
-                <p class="status" id="status"></p>
-            </div>
+    <p class="msg">Bappa is coming home, and every celebration feels brighter with the people we love around us.</p>
+    <p class="msg">The diyas are lit, the modaks are ready — and there's one thing missing… you. 🌸</p>
 
-            <div id="rsvpDone" style="display:none;">
-                <p id="thankYou">Yaaay! See you there 🌺✨</p>
+    <div class="when">🕑 <b>Monday, 14 Sep 2026</b> · 2:00 PM onwards</div>
 
-                <!-- Optional: replace with your own image/GIF, or delete it -->
-                <!-- <img src="your-image.jpg" alt="Celebration"> -->
+    <h2 id="question">Will you celebrate with us? 🐘</h2>
 
-                <a class="calendar-btn" id="calendarLink" href="#" target="_blank" rel="noopener">
-                    📅 Add to my calendar — 14 Sep 2026, 2 PM
-                </a>
-            </div>
-        </div>
-
-        <p class="invited-by">Invited by <strong>Arpit, Truffle &amp; Toto</strong> 🐾</p>
-        <p class="location">📍 Joyville Palm Grove, Virar West</p>
+    <div class="buttons">
+      <span class="yes-float"><button class="yes-btn" id="yesBtn" onclick="celebrate()">Yes 🙏</button></span>
+      <button class="no-btn" id="noBtn">Can't come 😔</button>
     </div>
 
-    <script>
-        // ---- 1. EVENT DETAILS ----
-        const EVENT = {
-            title:   "Ganesh Chaturthi Celebration",
-            start:   "20260914T140000",
-            end:     "20260914T170000",
-            tz:      "Asia/Kolkata",
-            details: "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
-            location:"Joyville Palm Grove, Virar West"
-        };
+    <p class="teaser" id="teaser"></p>
 
-        // ---- 2. FORMSPREE ENDPOINT ----
-        const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
+    <div id="celebration">
+      <h2>Ganpati Bappa Morya! 💃🎉</h2>
+      <div id="rsvpAsk">
+        <p class="msg">Type your name and tap Confirm to RSVP 🌸</p>
+        <input id="guestName" class="name-input" type="text" placeholder="Your name">
+        <br>
+        <button class="yes-btn" id="confirmBtn" style="margin-top:14px;" onclick="sendRSVP()">Confirm 🙏</button>
+        <p class="status" id="status"></p>
+      </div>
+      <div id="rsvpDone" style="display:none;">
+        <p class="msg" id="thankYou">Yaaay! See you there 🌺✨</p>
+        <!-- Optional: add your own image/GIF here, or delete this line -->
+        <!-- <img src="your-image.jpg" alt="Celebration"> -->
+        <a class="calendar-btn" id="calendarLink" href="#" target="_blank" rel="noopener">📅 Add to my calendar — 14 Sep 2026, 2 PM</a>
+      </div>
+    </div>
 
-        // ---- MUSIC (tries to start immediately; browsers may require one tap first) ----
-        const bgm = document.getElementById("bgm");
-        bgm.volume = 0.5;
+    <p class="invited-by">Invited by <b>Arpit, Truffle &amp; Toto</b> 🐾</p>
+    <p class="location">📍 Joyville Palm Grove, Virar West</p>
+  </div>
 
-        function playMusic() {
-            bgm.play().catch(() => { /* blocked until a tap — handled below */ });
-        }
+<script>
+    // ---- 1. EVENT DETAILS ----
+    const EVENT = {
+        title:   "Ganesh Chaturthi Celebration",
+        start:   "20260914T140000",
+        end:     "20260914T170000",
+        tz:      "Asia/Kolkata",
+        details: "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
+        location:"Joyville Palm Grove, Virar West"
+    };
 
-        // 1) try the instant the page loads (works where the browser allows it)
-        window.addEventListener("load", playMusic);
-        document.addEventListener("DOMContentLoaded", playMusic);
+    // ---- 2. FORMSPREE ENDPOINT ----
+    const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
 
-        // 2) fallback: start on the first tap/scroll if autoplay was blocked
-        function firstTouchStart() {
-            playMusic();
-            document.removeEventListener("click", firstTouchStart);
-            document.removeEventListener("touchstart", firstTouchStart);
-        }
-        document.addEventListener("click", firstTouchStart);
-        document.addEventListener("touchstart", firstTouchStart);
+    // ---- MUSIC (starts on first tap anywhere) ----
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.5;
+    function playMusic(){ bgm.play().catch(()=>{}); }
+    window.addEventListener("load", playMusic);
+    function firstTouchStart(){ playMusic();
+        document.removeEventListener("click", firstTouchStart);
+        document.removeEventListener("touchstart", firstTouchStart); }
+    document.addEventListener("click", firstTouchStart);
+    document.addEventListener("touchstart", firstTouchStart);
 
-        function celebrate() {
-            const cel = document.getElementById("celebration");
-            cel.style.display = "block";
-            document.getElementById("teaser").textContent = "";
-            const urlName = new URLSearchParams(location.search).get("name");
-            if (urlName) document.getElementById("guestName").value = urlName.replace(/[<>]/g, "").slice(0, 40);
-            playMusic();
-            burst();
-            setTimeout(() => cel.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
-        }
+    function celebrate(){
+        const cel = document.getElementById("celebration");
+        cel.style.display = "block";
+        document.getElementById("teaser").textContent = "";
+        const urlName = new URLSearchParams(location.search).get("name");
+        if (urlName) document.getElementById("guestName").value = urlName.replace(/[<>]/g,"").slice(0,40);
+        playMusic(); burst();
+        setTimeout(()=>cel.scrollIntoView({behavior:"smooth",block:"center"}),150);
+    }
 
-        async function sendRSVP() {
-            const status = document.getElementById("status");
-            const name = (document.getElementById("guestName").value || "Guest").trim().slice(0, 60);
-
-            status.style.color = "#8a5a2e";
-            status.textContent = "Sending… ⏳";
-
-            try {
-                const res = await fetch(RSVP_ENDPOINT, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
-                    body: JSON.stringify({
-                        name: name,
-                        response: "Yes — coming",
-                        event: "Ganesh Chaturthi (14 Sep 2026, 2 PM)",
-                        when: new Date().toLocaleString()
-                    })
-                });
-
-                console.log("Formspree status:", res.status);
-                const data = await res.json().catch(() => ({}));
-                console.log("Formspree response:", data);
-
-                if (res.ok) {
-                    showDone(name);
-                } else {
-                    status.style.color = "#d4321e";
-                    status.textContent = "Couldn't record RSVP — but you can still add the date below 👇";
-                    showDone(name);
-                }
-            } catch (err) {
-                console.error("RSVP send failed:", err);
-                status.style.color = "#d4321e";
-                status.textContent = "No internet / blocked — add the date below anyway 👇";
-                showDone(name);
-            }
-        }
-
-        function showDone(name) {
-            document.getElementById("rsvpAsk").style.display = "none";
-            document.getElementById("rsvpDone").style.display = "block";
-            document.getElementById("thankYou").textContent = "Yaaay! See you there, " + name + " 🌺✨";
-            setTimeout(() => document.getElementById("rsvpDone")
-                .scrollIntoView({ behavior: "smooth", block: "center" }), 150);
-        }
-
-        (function setCalendar() {
-            const p = new URLSearchParams({
-                action: "TEMPLATE", text: EVENT.title,
-                dates: EVENT.start + "/" + EVENT.end, ctz: EVENT.tz,
-                details: EVENT.details, location: EVENT.location
+    async function sendRSVP(){
+        const status = document.getElementById("status");
+        const name = (document.getElementById("guestName").value || "Guest").trim().slice(0,60);
+        status.style.color = "#8a5a2e"; status.textContent = "Sending… ⏳";
+        try{
+            const res = await fetch(RSVP_ENDPOINT,{
+                method:"POST",
+                headers:{"Content-Type":"application/json","Accept":"application/json"},
+                body:JSON.stringify({name:name, response:"Yes — coming",
+                    event:"Ganesh Chaturthi (14 Sep 2026, 2 PM)", when:new Date().toLocaleString()})
             });
-            document.getElementById("calendarLink").href =
-                "https://calendar.google.com/calendar/render?" + p.toString();
-        })();
+            console.log("Formspree status:", res.status);
+            const data = await res.json().catch(()=>({})); console.log("Formspree response:", data);
+            if(res.ok){ showDone(name); }
+            else{ status.style.color="#e5391d";
+                status.textContent="Couldn't record RSVP — but you can still add the date below 👇"; showDone(name); }
+        }catch(err){ console.error("RSVP send failed:", err);
+            status.style.color="#e5391d";
+            status.textContent="No internet / blocked — add the date below anyway 👇"; showDone(name); }
+    }
 
-        (function personalise() {
-            const name = new URLSearchParams(location.search).get("name");
-            if (name) {
-                const clean = name.replace(/[<>]/g, "").trim().slice(0, 40);
-                if (clean) document.getElementById("question").textContent =
-                    clean + ", will you celebrate Ganesh Chaturthi with us? 🐘";
-            }
-        })();
+    function showDone(name){
+        document.getElementById("rsvpAsk").style.display="none";
+        document.getElementById("rsvpDone").style.display="block";
+        document.getElementById("thankYou").textContent="Yaaay! See you there, "+name+" 🌺✨";
+        setTimeout(()=>document.getElementById("rsvpDone").scrollIntoView({behavior:"smooth",block:"center"}),150);
+    }
 
-        const noBtn  = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-        const teaser = document.getElementById("teaser");
-        const messages = [
-            "Arrey, Bappa is waiting! 🐘", "Are you sure? 🥺", "Try again... 😜",
-            "Toto will be so sad 🐾", "No 'No' allowed today! 🙅",
-            "Modaks getting cold 🍬", "Bappa Morya means YES! 🙏"
-        ];
-        let tries = 0;
-        function dodge(e) {
-            if (e) e.preventDefault();
-            tries++;
-            const pad = 20;
-            const maxX = window.innerWidth  - noBtn.offsetWidth  - pad;
-            const maxY = window.innerHeight - noBtn.offsetHeight - pad;
-            noBtn.style.position = "fixed";
-            noBtn.style.left = Math.max(pad, Math.random() * maxX) + "px";
-            noBtn.style.top  = Math.max(pad, Math.random() * maxY) + "px";
-            yesBtn.style.fontSize = (17 * Math.min(1 + tries * 0.08, 1.8)) + "px";
-            noBtn.style.opacity = Math.max(0.4, 1 - tries * 0.08);
-            teaser.textContent = messages[(tries - 1) % messages.length];
+    (function setCalendar(){
+        const p = new URLSearchParams({action:"TEMPLATE", text:EVENT.title,
+            dates:EVENT.start+"/"+EVENT.end, ctz:EVENT.tz, details:EVENT.details, location:EVENT.location});
+        document.getElementById("calendarLink").href="https://calendar.google.com/calendar/render?"+p.toString();
+    })();
+
+    (function personalise(){
+        const name = new URLSearchParams(location.search).get("name");
+        if(name){ const clean = name.replace(/[<>]/g,"").trim().slice(0,40);
+            if(clean) document.getElementById("question").textContent = clean+", will you celebrate with us? 🐘"; }
+    })();
+
+    // ---- runaway "Can't come" button ----
+    const noBtn=document.getElementById("noBtn"), yesBtn=document.getElementById("yesBtn"), teaser=document.getElementById("teaser");
+    const messages=["Arrey, Bappa is waiting! 🐘","Are you sure? 🥺","Try again... 😜","Toto will be so sad 🐾","No 'No' allowed today! 🙅","Modaks getting cold 🍬","Bappa Morya means YES! 🙏"];
+    let tries=0;
+    function dodge(e){ if(e)e.preventDefault(); tries++;
+        const pad=20, maxX=innerWidth-noBtn.offsetWidth-pad, maxY=innerHeight-noBtn.offsetHeight-pad;
+        noBtn.style.position="fixed";
+        noBtn.style.left=Math.max(pad,Math.random()*maxX)+"px";
+        noBtn.style.top =Math.max(pad,Math.random()*maxY)+"px";
+        yesBtn.style.fontSize=(17*Math.min(1+tries*0.08,1.8))+"px";
+        noBtn.style.opacity=Math.max(.4,1-tries*0.08);
+        teaser.textContent=messages[(tries-1)%messages.length];
+    }
+    noBtn.addEventListener("mouseenter",dodge);
+    noBtn.addEventListener("click",dodge);
+    noBtn.addEventListener("touchstart",dodge,{passive:false});
+
+    // ---- floating marigolds ----
+    const symbols=["🌼","🪔","🌺","🧡","🌸","🙏"];
+    setInterval(function(){
+        const f=document.createElement("div"); f.className="floaty";
+        f.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+        f.style.left=Math.random()*100+"vw"; f.style.fontSize=(18+Math.random()*18)+"px";
+        document.body.appendChild(f); setTimeout(()=>f.remove(),7000);
+    },450);
+    function burst(){ for(let i=0;i<20;i++){ setTimeout(()=>{
+        const f=document.createElement("div"); f.className="floaty";
+        f.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+        f.style.left=Math.random()*100+"vw"; f.style.animationDuration="3.5s";
+        document.body.appendChild(f); setTimeout(()=>f.remove(),3500);
+    },i*80);} }
+
+    // ---- draw the marigold garland ----
+    (function garland(){
+        const g=document.getElementById("garlandFlowers"), n=20, w=460;
+        for(let i=0;i<n;i++){
+            const x=(i+0.5)*(w/n), y=14+Math.sin(i/n*Math.PI)*8;
+            const c=i%2? "#ffbb45":"#f5a01f";
+            const el=document.createElementNS("http://www.w3.org/2000/svg","g");
+            el.setAttribute("transform",`translate(${x},${y})`);
+            el.innerHTML=`<path d="M0 8 L0 16" stroke="#3f8f4f" stroke-width="1.5"/>`+
+                         `<circle r="7.5" fill="${c}"/><circle r="5" fill="#e8720e"/><circle r="2" fill="#ffe0a3"/>`;
+            g.appendChild(el);
         }
-        noBtn.addEventListener("mouseenter", dodge);
-        noBtn.addEventListener("click", dodge);
-        noBtn.addEventListener("touchstart", dodge, { passive: false });
+    })();
 
-        const symbols = ["🌼", "🪔", "🌺", "🧡", "🌸", "🙏"];
-        setInterval(function () {
-            const f = document.createElement("div");
-            f.className = "floaty";
-            f.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            f.style.left = Math.random() * 100 + "vw";
-            f.style.fontSize = (18 + Math.random() * 18) + "px";
-            document.body.appendChild(f);
-            setTimeout(() => f.remove(), 7000);
-        }, 450);
+    // ---- draw hanging drops on the torana ----
+    (function drops(){
+        const g=document.getElementById("toranaDrops");
+        [40,90,150,230,310,370,420].forEach(x=>{
+            const el=document.createElementNS("http://www.w3.org/2000/svg","g");
+            const yTop = 14 + Math.abs(x-230)*0.02;
+            el.innerHTML=`<line x1="${x}" y1="${yTop}" x2="${x}" y2="${yTop+14}" stroke="#c9962f" stroke-width="1.4"/>`+
+                         `<circle cx="${x}" cy="${yTop+18}" r="4" fill="#e8be5a"/>`;
+            g.appendChild(el);
+        });
+    })();
 
-        function burst() {
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const f = document.createElement("div");
-                    f.className = "floaty";
-                    f.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                    f.style.left = Math.random() * 100 + "vw";
-                    f.style.animationDuration = "3.5s";
-                    document.body.appendChild(f);
-                    setTimeout(() => f.remove(), 3500);
-                }, i * 80);
-            }
+    // ---- draw mandala petals ----
+    (function mandala(){
+        const wrap=document.getElementById("mandalaPetals");
+        for(let i=0;i<24;i++){
+            const p=document.createElementNS("http://www.w3.org/2000/svg","path");
+            p.setAttribute("d","M100 100 L100 18 Q109 59 100 100 Z");
+            p.setAttribute("transform",`rotate(${i/24*360} 100 100)`);
+            p.setAttribute("stroke","#f0d69a"); p.setAttribute("stroke-width",".4"); p.setAttribute("fill","none");
+            wrap.appendChild(p);
         }
-    </script>
-
+    })();
+</script>
 </body>
 </html>
