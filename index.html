@@ -6,94 +6,57 @@
     <title>Ganpati Bappa Morya 🙏</title>
     <style>
         body {
-            margin: 0;
-            padding: 24px 12px;
+            margin: 0; padding: 24px 12px;
             background: linear-gradient(135deg, #fbd08a, #e8720e);
             font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
-            box-sizing: border-box;
+            display: flex; min-height: 100vh; overflow-x: hidden; box-sizing: border-box;
         }
-
         .card {
-            margin: auto;
-            background: #fffaf0;
-            width: 450px;
-            max-width: 90vw;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(120,50,0,0.3);
-            text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
-            position: relative;
-            z-index: 2;
+            margin: auto; background: #fffaf0; width: 450px; max-width: 90vw; padding: 40px;
+            border-radius: 25px; box-shadow: 0 20px 40px rgba(120,50,0,0.3); text-align: center;
+            animation: fadeIn 1.5s ease-in-out; position: relative; z-index: 2;
             border: 2px solid rgba(201,150,47,0.5);
         }
-
         .invocation { color: #d4321e; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
         h1 { color: #c9500e; margin: 5px 0 15px; font-size: 30px; }
         p { color: #5a3a1e; font-size: 17px; line-height: 1.7; }
         h2 { color: #d4321e; margin-top: 20px; }
-
         .when {
             margin-top: 18px; display: inline-block; padding: 10px 20px;
             border: 1px solid rgba(201,150,47,0.6); border-radius: 12px;
             background: #fff6e6; font-size: 15px; color: #c9500e; font-weight: 600;
         }
-
         .invited-by { margin-top: 22px; font-size: 15px; color: #8a5a2e; }
         .invited-by strong { color: #c9500e; }
         .location { margin-top: 6px; font-size: 15px; color: #8a5a2e; }
-
-        .buttons {
-            margin-top: 25px; display: flex; gap: 14px;
-            justify-content: center; align-items: center; flex-wrap: wrap;
-        }
-
+        .buttons { margin-top: 25px; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
         .yes-float { display: inline-block; animation: bob 2.2s ease-in-out infinite; }
         @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-
-        button {
-            padding: 14px 34px; border: none; border-radius: 30px;
-            font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.25s ease;
-        }
-        .yes-btn {
-            background: linear-gradient(135deg, #d4321e, #f5901f); color: white;
-            box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6);
-        }
+        button { padding: 14px 34px; border: none; border-radius: 30px; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.25s ease; }
+        .yes-btn { background: linear-gradient(135deg, #d4321e, #f5901f); color: white; box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6); }
         .yes-btn:hover { transform: scale(1.07); }
         .no-btn { background: #efe3d0; color: #8a5a2e; }
-
         .teaser { margin-top: 14px; min-height: 20px; font-size: 14px; color: #c9500e; font-weight: 600; }
-
         #celebration { margin-top: 25px; display: none; animation: fadeIn 1s ease-in-out; }
         #celebration img { width: 220px; margin-top: 15px; border-radius: 15px; }
-
         .name-input {
             margin-top: 12px; padding: 12px 16px; width: 80%; max-width: 260px;
-            border: 1px solid #d9b877; border-radius: 12px; font-size: 16px;
-            text-align: center; outline: none;
+            border: 1px solid #d9b877; border-radius: 12px; font-size: 16px; text-align: center; outline: none;
         }
-
+        .status { margin-top: 12px; font-size: 14px; min-height: 18px; font-weight: 600; }
         .calendar-btn {
             display: inline-block; margin-top: 18px; text-decoration: none;
             padding: 14px 28px; border-radius: 30px; background: #c9962f;
             color: white; font-weight: 600; font-size: 16px;
         }
         .calendar-btn:hover { transform: scale(1.05); }
-
-        .floaty {
-            position: fixed; bottom: -40px; font-size: 24px;
-            animation: float 7s linear infinite; z-index: 1; pointer-events: none;
-        }
+        .floaty { position: fixed; bottom: -40px; font-size: 24px; animation: float 7s linear infinite; z-index: 1; pointer-events: none; }
         @keyframes float {
-            0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
-            15%  { opacity: 1; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; }
             100% { transform: translateY(-115vh) rotate(40deg); opacity: 0; }
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         @media (prefers-reduced-motion: reduce) { .floaty, .yes-float { animation: none; } }
     </style>
 </head>
@@ -123,10 +86,11 @@
             <h2>Ganpati Bappa Morya! 💃🎉</h2>
 
             <div id="rsvpAsk">
-                <p>Let us know you're coming 🌸</p>
+                <p>Type your name and tap Confirm to RSVP 🌸</p>
                 <input id="guestName" class="name-input" type="text" placeholder="Your name" />
                 <br>
                 <button class="yes-btn" id="confirmBtn" style="margin-top:14px;" onclick="sendRSVP()">Confirm 🙏</button>
+                <p class="status" id="status"></p>
             </div>
 
             <div id="rsvpDone" style="display:none;">
@@ -146,19 +110,18 @@
     </div>
 
     <script>
-        // ---- 1. EDIT YOUR EVENT DETAILS HERE ----
+        // ---- 1. EVENT DETAILS ----
         const EVENT = {
             title:   "Ganesh Chaturthi Celebration",
-            start:   "20260914T140000",   // 14 Sep 2026, 2:00 PM
-            end:     "20260914T170000",   // ends 5:00 PM
+            start:   "20260914T140000",
+            end:     "20260914T170000",
             tz:      "Asia/Kolkata",
             details: "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
             location:"Joyville Palm Grove, Virar West"
         };
 
-        // ---- 2. YOUR FORMSPREE ENDPOINT (RSVPs land in your Formspree dashboard + email) ----
+        // ---- 2. FORMSPREE ENDPOINT ----
         const RSVP_ENDPOINT = "https://formspree.io/f/xnpqlyvk";
-        // ------------------------------------------------------------------------------------
 
         function celebrate() {
             const cel = document.getElementById("celebration");
@@ -170,11 +133,16 @@
             setTimeout(() => cel.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
         }
 
-        function sendRSVP() {
+        // Waits for Formspree's reply and reports what actually happened
+        async function sendRSVP() {
+            const status = document.getElementById("status");
             const name = (document.getElementById("guestName").value || "Guest").trim().slice(0, 60);
 
-            if (RSVP_ENDPOINT) {
-                fetch(RSVP_ENDPOINT, {
+            status.style.color = "#8a5a2e";
+            status.textContent = "Sending… ⏳";
+
+            try {
+                const res = await fetch(RSVP_ENDPOINT, {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Accept": "application/json" },
                     body: JSON.stringify({
@@ -183,25 +151,41 @@
                         event: "Ganesh Chaturthi (14 Sep 2026, 2 PM)",
                         when: new Date().toLocaleString()
                     })
-                }).catch(() => {});
-            }
+                });
 
+                console.log("Formspree status:", res.status);
+                const data = await res.json().catch(() => ({}));
+                console.log("Formspree response:", data);
+
+                if (res.ok) {
+                    showDone(name);
+                } else {
+                    // Formspree returned an error (e.g. form not confirmed yet)
+                    status.style.color = "#d4321e";
+                    status.textContent = "Couldn't record RSVP — but you can still add the date below 👇";
+                    showDone(name);
+                }
+            } catch (err) {
+                console.error("RSVP send failed:", err);
+                status.style.color = "#d4321e";
+                status.textContent = "No internet / blocked — add the date below anyway 👇";
+                showDone(name);
+            }
+        }
+
+        function showDone(name) {
             document.getElementById("rsvpAsk").style.display = "none";
             document.getElementById("rsvpDone").style.display = "block";
-            document.getElementById("thankYou").textContent =
-                "Yaaay! See you there, " + name + " 🌺✨";
+            document.getElementById("thankYou").textContent = "Yaaay! See you there, " + name + " 🌺✨";
             setTimeout(() => document.getElementById("rsvpDone")
                 .scrollIntoView({ behavior: "smooth", block: "center" }), 150);
         }
 
         (function setCalendar() {
             const p = new URLSearchParams({
-                action: "TEMPLATE",
-                text: EVENT.title,
-                dates: EVENT.start + "/" + EVENT.end,
-                ctz: EVENT.tz,
-                details: EVENT.details,
-                location: EVENT.location
+                action: "TEMPLATE", text: EVENT.title,
+                dates: EVENT.start + "/" + EVENT.end, ctz: EVENT.tz,
+                details: EVENT.details, location: EVENT.location
             });
             document.getElementById("calendarLink").href =
                 "https://calendar.google.com/calendar/render?" + p.toString();
