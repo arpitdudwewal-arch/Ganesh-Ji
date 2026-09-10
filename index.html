@@ -55,22 +55,65 @@
             margin-top: 20px;
         }
 
-        button {
+        .invited-by {
+            margin-top: 22px;
+            font-size: 15px;
+            color: #8a5a2e;
+        }
+        .invited-by strong { color: #c9500e; }
+
+        .location {
+            margin-top: 6px;
+            font-size: 15px;
+            color: #8a5a2e;
+        }
+
+        .buttons {
             margin-top: 25px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .yes-float {
+            display: inline-block;
+            animation: bob 2.2s ease-in-out infinite;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-9px); }
+        }
+
+        button {
             padding: 14px 34px;
             border: none;
             border-radius: 30px;
-            background: linear-gradient(135deg, #d4321e, #f5901f);
-            color: white;
             font-size: 17px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s ease;
-            box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6);
+            transition: 0.25s ease;
         }
 
-        button:hover {
-            transform: scale(1.07);
+        .yes-btn {
+            background: linear-gradient(135deg, #d4321e, #f5901f);
+            color: white;
+            box-shadow: 0 10px 22px -6px rgba(212,50,30,0.6);
+        }
+        .yes-btn:hover { transform: scale(1.07); }
+
+        .no-btn {
+            background: #efe3d0;
+            color: #8a5a2e;
+        }
+
+        .teaser {
+            margin-top: 14px;
+            min-height: 20px;
+            font-size: 14px;
+            color: #c9500e;
+            font-weight: 600;
         }
 
         #celebration {
@@ -79,7 +122,6 @@
             animation: fadeIn 1s ease-in-out;
         }
 
-        /* Put your own photo or GIF here if you like */
         #celebration img {
             width: 220px;
             margin-top: 15px;
@@ -99,7 +141,6 @@
         }
         .calendar-btn:hover { transform: scale(1.05); }
 
-        /* floating decorations rising up the screen */
         .floaty {
             position: fixed;
             bottom: -40px;
@@ -121,7 +162,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .floaty { display: none; }
+            .floaty, .yes-float { animation: none; }
         }
     </style>
 </head>
@@ -142,9 +183,16 @@
             and there's one thing missing… you. 🌸
         </p>
 
-        <h2>Will you celebrate Ganesh Chaturthi with us? 🐘</h2>
+        <h2 id="question">Will you celebrate Ganesh Chaturthi with us? 🐘</h2>
 
-        <button onclick="celebrate()">Yes 🙏</button>
+        <div class="buttons">
+            <span class="yes-float">
+                <button class="yes-btn" id="yesBtn" onclick="celebrate()">Yes 🙏</button>
+            </span>
+            <button class="no-btn" id="noBtn">Can't come 😔</button>
+        </div>
+
+        <p class="teaser" id="teaser"></p>
 
         <div id="celebration">
             <h2>Ganpati Bappa Morya! 💃🎉</h2>
@@ -157,22 +205,26 @@
                 📅 Add to my calendar — 14 Sep 2026
             </a>
         </div>
+
+        <p class="invited-by">Invited by <strong>Arpit, Truffle &amp; Toto</strong> 🐾</p>
+        <p class="location">📍 Joyville Palm Grove, Virar West</p>
     </div>
 
     <script>
         // ---- EDIT YOUR EVENT DETAILS HERE ----
         const EVENT = {
             title:    "Ganesh Chaturthi Celebration",
-            startYMD: "20260914",   // 14 Sep 2026 (all-day)
-            endYMD:   "20260915",   // next day = end of a single all-day event
-            details:  "Come welcome Bappa home and celebrate Ganesh Chaturthi with us!",
-            location: ""            // e.g. "Sunshine Apartments, Mumbai"
+            startYMD: "20260914",
+            endYMD:   "20260915",
+            details:  "Come welcome Bappa home and celebrate Ganesh Chaturthi with us! Invited by Arpit, Truffle & Toto.",
+            location: "Joyville Palm Grove, Virar West"
         };
         // --------------------------------------
 
         function celebrate() {
             document.getElementById("celebration").style.display = "block";
-            burst();  // extra flower shower when they say yes
+            document.getElementById("teaser").textContent = "";
+            burst();
         }
 
         // Build the Google Calendar link
@@ -194,11 +246,50 @@
             if (name) {
                 const clean = name.replace(/[<>]/g, "").trim().slice(0, 40);
                 if (clean) {
-                    const h2 = document.querySelector(".card h2");
-                    h2.textContent = clean + ", will you celebrate Ganesh Chaturthi with us? 🐘";
+                    document.getElementById("question").textContent =
+                        clean + ", will you celebrate Ganesh Chaturthi with us? 🐘";
                 }
             }
         })();
+
+        // ---- The runaway "Can't come" button ----
+        const noBtn  = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const teaser = document.getElementById("teaser");
+        const messages = [
+            "Arrey, Bappa is waiting! 🐘",
+            "Are you sure? 🥺",
+            "Try again... 😜",
+            "Toto will be so sad 🐾",
+            "No 'No' allowed today! 🙅",
+            "Modaks getting cold 🍬",
+            "Bappa Morya means YES! 🙏"
+        ];
+        let tries = 0;
+
+        function dodge(e) {
+            if (e) e.preventDefault();
+            tries++;
+
+            // jump to a random spot on screen
+            const pad = 20;
+            const maxX = window.innerWidth  - noBtn.offsetWidth  - pad;
+            const maxY = window.innerHeight - noBtn.offsetHeight - pad;
+            noBtn.style.position = "fixed";
+            noBtn.style.left = Math.max(pad, Math.random() * maxX) + "px";
+            noBtn.style.top  = Math.max(pad, Math.random() * maxY) + "px";
+
+            // grow the Yes button (capped) and shrink No a little
+            const scale = Math.min(1 + tries * 0.08, 1.8);
+            yesBtn.style.fontSize = (17 * scale) + "px";
+            noBtn.style.opacity = Math.max(0.4, 1 - tries * 0.08);
+
+            teaser.textContent = messages[(tries - 1) % messages.length];
+        }
+
+        noBtn.addEventListener("mouseenter", dodge);
+        noBtn.addEventListener("click", dodge);
+        noBtn.addEventListener("touchstart", dodge, { passive: false });
 
         // floating decorations
         const symbols = ["🌼", "🪔", "🌺", "🧡", "🌸", "🙏"];
@@ -212,7 +303,6 @@
             setTimeout(() => f.remove(), 7000);
         }, 450);
 
-        // a quick shower of flowers on "Yes"
         function burst() {
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
